@@ -19,11 +19,11 @@ class Service extends Model
         ];
     }
 
-    // /**
-    //  * @return HasMany<Subscription, $this>
-    //  */
-    // public function subscriptions(): HasMany
-    // {
-    //     return $this->hasMany(Subscription::class);
-    // }
+    /**
+     * @return HasMany<Subscription, $this>
+     */
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscription::class);
+    }
 }
