@@ -25,8 +25,8 @@ class SubscriptionController extends Controller
         $query = Subscription::query()->with(['customer', 'service']);
 
         // Filter by status
-        if ($request->has('status')) {
-            $status = $request->query('status');
+        $status = $request->query('status');
+        if ($status !== null) {
             if (!in_array($status, self::STATUSES, true)) {
                 return response()->json([
                     'success' => false,
@@ -38,13 +38,15 @@ class SubscriptionController extends Controller
         }
 
         // Filter by customer_id
-        if ($request->has('customer_id')) {
-            $query->where('customer_id', $request->query('customer_id'));
+        $customerId = $request->query('customer_id');
+        if ($customerId !== null) {
+            $query->where('customer_id', $customerId);
         }
 
         // Filter by service_id
-        if ($request->has('service_id')) {
-            $query->where('service_id', $request->query('service_id'));
+        $serviceId = $request->query('service_id');
+        if ($serviceId !== null) {
+            $query->where('service_id', $serviceId);
         }
 
         $subscriptions = $query->latest()->get();
@@ -86,7 +88,7 @@ class SubscriptionController extends Controller
      * GET /api/subscriptions/{id}
      * Detail subscription
      */
-    public function show(int $subscription): JsonResponse
+    public function show($subscription): JsonResponse
     {
         $subscription = Subscription::query()
             ->with(['customer', 'service'])
@@ -111,7 +113,7 @@ class SubscriptionController extends Controller
      * PUT/PATCH /api/subscriptions/{id}
      * Update subscription
      */
-    public function update(Request $request, int $subscription): JsonResponse
+    public function update(Request $request, $subscription): JsonResponse
     {
         $subscription = Subscription::query()->find($subscription);
 
@@ -144,7 +146,7 @@ class SubscriptionController extends Controller
     /**
      * DELETE /api/subscriptions/{id}
      */
-    public function destroy(int $subscription): JsonResponse
+    public function destroy($subscription): JsonResponse
     {
         $subscription = Subscription::query()->find($subscription);
 
@@ -170,7 +172,7 @@ class SubscriptionController extends Controller
      * Ubah status subscription secara spesifik
      * Body: { "status": "active" }
      */
-    public function changeStatus(Request $request, int $subscription): JsonResponse
+    public function changeStatus(Request $request, $subscription): JsonResponse
     {
         $subscription = Subscription::query()->find($subscription);
 

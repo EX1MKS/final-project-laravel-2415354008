@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    // Status yang tersedia
+    private const STATUSES = ['active', 'inactive'];
+
     /**
      * GET /api/customers
      * Ambil semua customer, bisa filter ?status=active|inactive
@@ -18,7 +21,7 @@ class CustomerController extends Controller
     public function index(Request $request): JsonResponse
     {
         $status = $request->query('status');
-        $query  = Customer::query();
+        $query = Customer::query();
 
         if ($status !== null) {
             if (!in_array($status, ['active', 'inactive'], true)) {
@@ -71,7 +74,7 @@ class CustomerController extends Controller
      * GET /api/customers/{id}
      * Detail customer berdasarkan ID
      */
-    public function show(int $customer): JsonResponse
+    public function show($customer): JsonResponse
     {
         $customer = Customer::query()->find($customer);
 
@@ -94,7 +97,7 @@ class CustomerController extends Controller
      * PUT/PATCH /api/customers/{id}
      * Update data customer
      */
-    public function update(Request $request, int $customer): JsonResponse
+    public function update(Request $request, $customer): JsonResponse
     {
         $customer = Customer::query()->find($customer);
 
@@ -127,7 +130,7 @@ class CustomerController extends Controller
      * DELETE /api/customers/{id}
      * Hapus customer (tidak bisa jika punya subscription)
      */
-    public function destroy(int $customer): JsonResponse
+    public function destroy($customer): JsonResponse
     {
         $customer = Customer::query()->find($customer);
 
@@ -159,7 +162,7 @@ class CustomerController extends Controller
     /**
      * PATCH /api/customers/{id}/activate
      */
-    public function activate(int $customer): JsonResponse
+    public function activate($customer): JsonResponse
     {
         $customer = Customer::query()->find($customer);
 
@@ -183,7 +186,7 @@ class CustomerController extends Controller
     /**
      * PATCH /api/customers/{id}/deactivate
      */
-    public function deactivate(int $customer): JsonResponse
+    public function deactivate($customer): JsonResponse
     {
         $customer = Customer::query()->find($customer);
 

@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
+    // Status yang tersedia
+    private const STATUSES = ['active', 'inactive'];
+
     /**
      * GET /api/services
      * Ambil semua service, bisa filter ?status=active|inactive
@@ -18,7 +21,7 @@ class ServiceController extends Controller
     public function index(Request $request): JsonResponse
     {
         $status = $request->query('status');
-        $query  = Service::query();
+        $query = Service::query();
 
         if ($status !== null) {
             if (!in_array($status, ['active', 'inactive'], true)) {
@@ -70,7 +73,7 @@ class ServiceController extends Controller
      * GET /api/services/{id}
      * Ambil detail service berdasarkan ID
      */
-    public function show(int $service): JsonResponse
+    public function show($service): JsonResponse
     {
         $service = Service::query()->find($service);
 
@@ -93,7 +96,7 @@ class ServiceController extends Controller
      * PUT/PATCH /api/services/{id}
      * Update data service
      */
-    public function update(Request $request, int $service): JsonResponse
+    public function update(Request $request, $service): JsonResponse
     {
         $service = Service::query()->find($service);
 
@@ -125,7 +128,7 @@ class ServiceController extends Controller
      * DELETE /api/services/{id}
      * Hapus service (tidak bisa dihapus jika punya subscription)
      */
-    public function destroy(int $service): JsonResponse
+    public function destroy($service): JsonResponse
     {
         $service = Service::query()->find($service);
 
@@ -158,7 +161,7 @@ class ServiceController extends Controller
      * PATCH /api/services/{id}/activate
      * Aktifkan service
      */
-    public function activate(int $service): JsonResponse
+    public function activate($service): JsonResponse
     {
         $service = Service::query()->find($service);
 
@@ -183,7 +186,7 @@ class ServiceController extends Controller
      * PATCH /api/services/{id}/deactivate
      * Nonaktifkan service
      */
-    public function deactivate(int $service): JsonResponse
+    public function deactivate($service): JsonResponse
     {
         $service = Service::query()->find($service);
 
