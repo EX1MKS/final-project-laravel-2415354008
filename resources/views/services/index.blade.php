@@ -3,21 +3,21 @@
 {{-- Stats Row --}}
 <div class="stats-grid">
     <div class="stat-card cyan">
-        <div class="stat-icon cyan">⚙️</div>
+        <div class="stat-icon cyan"><iconify-icon icon="mdi:cog"></iconify-icon></div>
         <div>
             <div class="stat-value cyan">{{ $stats['total'] }}</div>
             <div class="stat-label">Total Layanan</div>
         </div>
     </div>
     <div class="stat-card green">
-        <div class="stat-icon green">✅</div>
+        <div class="stat-icon green"><iconify-icon icon="mdi:check-circle"></iconify-icon></div>
         <div>
             <div class="stat-value green">{{ $stats['active'] }}</div>
             <div class="stat-label">Layanan Aktif</div>
         </div>
     </div>
     <div class="stat-card red">
-        <div class="stat-icon red">❌</div>
+        <div class="stat-icon red"><iconify-icon icon="mdi:close-circle"></iconify-icon></div>
         <div>
             <div class="stat-value red">{{ $stats['inactive'] }}</div>
             <div class="stat-label">Layanan Nonaktif</div>
@@ -50,16 +50,16 @@
                 <input type="hidden" name="status" value="{{ $status }}">
             @endif
             <div class="search-input-wrap">
-                <span class="search-icon">🔍</span>
+                <span class="search-icon"><iconify-icon icon="mdi:magnify" style="font-size:16px;"></iconify-icon></span>
                 <input type="text" name="search" class="search-input" placeholder="Cari nama layanan..." value="{{ $search }}">
             </div>
             @if($search)
-                <a href="{{ route('services.index', ['status' => $status]) }}" class="btn btn-ghost" title="Hapus Pencarian">✕</a>
+                <a href="{{ route('services.index', ['status' => $status]) }}" class="btn btn-ghost" title="Hapus Pencarian"><iconify-icon icon="mdi:close" style="font-size:16px; vertical-align:-3px;"></iconify-icon></a>
             @endif
             <button type="submit" class="btn btn-secondary">Cari</button>
         </form>
         <a href="{{ route('services.create') }}" class="btn btn-primary">
-            <span>➕</span> Tambah Service
+            <span><iconify-icon icon="mdi:plus" style="font-size:16px; vertical-align:-3px;"></iconify-icon></span> Tambah Service
         </a>
     </div>
 </div>
@@ -72,7 +72,7 @@
     <div class="card-body">
         @if($services->isEmpty())
             <div class="empty-state">
-                <div class="empty-state-icon">⚙️</div>
+                <div class="empty-state-icon"><iconify-icon icon="mdi:cog"></iconify-icon></div>
                 <h3>Layanan tidak ditemukan</h3>
                 <p>Tidak ada data layanan digital yang cocok dengan kriteria pencarian Anda.</p>
                 <a href="{{ route('services.create') }}" class="btn btn-primary btn-sm">Buat Layanan Baru</a>
@@ -125,7 +125,7 @@
                                         </form>
 
                                         <a href="{{ route('services.delete', $svc) }}" class="btn btn-danger btn-sm btn-icon" title="Hapus">
-                                            🗑️
+                                            <iconify-icon icon="mdi:trash-can" style="font-size:14px; vertical-align:-2px;"></iconify-icon>
                                         </a>
                                     </div>
                                 </td>

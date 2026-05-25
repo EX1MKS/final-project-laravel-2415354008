@@ -117,65 +117,26 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Tampilkan form edit subscription.
+     * Update status subscription (inline dari tabel).
      */
-    public function edit(Subscription $subscription): View
+    public function updateStatus(Request $request, Subscription $subscription): RedirectResponse
     {
-        $customers = Customer::orderBy('name')->get();
-        $services  = Service::orderBy('name')->get();
+        // Subscription yang sudah DISMANTLE tidak bisa diubah lagi
+        if ($subscription->status === 'dismantle') {
+            return redirect()
+                ->route('subscriptions.index')
+                ->with('error', "Subscription #{$subscription->id} sudah berstatus DISMANTLE dan tidak dapat diubah lagi.");
+        }
 
-        return view('subscriptions.edit', [
-            'title'        => 'Edit Subscription',
-            'subtitle'     => "Subscription #{$subscription->id}",
-            'subscription' => $subscription->load(['customer', 'service']),
-            'customers'    => $customers,
-            'services'     => $services,
-            'statuses'     => self::STATUSES,
-        ]);
-    }
-
-    /**
-     * Update subscription.
-     */
-    public function update(Request $request, Subscription $subscription): RedirectResponse
-    {
         $data = $request->validate([
-            'customer_id' => ['required', 'integer', 'exists:customers,id'],
-            'service_id'  => ['required', 'integer', 'exists:services,id'],
-            'start_date'  => ['nullable', 'date'],
-            'end_date'    => ['nullable', 'date', 'after_or_equal:start_date'],
-            'status'      => ['required', Rule::in(self::STATUSES)],
+            'status' => ['required', Rule::in(self::STATUSES)],
         ]);
 
-        $subscription->update($data);
+        $subscription->update(['status' => $data['status']]);
 
         return redirect()
             ->route('subscriptions.index')
-            ->with('success', "Subscription #{$subscription->id} berhasil diperbarui!");
-    }
-
-    /**
-     * Tampilkan konfirmasi hapus.
-     */
-    public function delete(Subscription $subscription): View
-    {
-        return view('subscriptions.delete', [
-            'title'        => 'Hapus Subscription',
-            'subtitle'     => 'Konfirmasi penghapusan data',
-            'subscription' => $subscription->load(['customer', 'service']),
-        ]);
-    }
-
-    /**
-     * Hapus subscription.
-     */
-    public function destroy(Subscription $subscription): RedirectResponse
-    {
-        $id = $subscription->id;
-        $subscription->delete();
-
-        return redirect()
-            ->route('subscriptions.index')
-            ->with('success', "Subscription #{$id} berhasil dihapus.");
+            ->with('success', "Status subscription #{$subscription->id} berhasil diubah ke " . strtoupper($data['status']) . "!");
     }
 }
+

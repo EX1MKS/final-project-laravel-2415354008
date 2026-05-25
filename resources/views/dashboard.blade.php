@@ -3,7 +3,7 @@
 <div class="stats-grid">
     {{-- Card Customer --}}
     <div class="stat-card blue">
-        <div class="stat-icon blue">👥</div>
+        <div class="stat-icon blue"><iconify-icon icon="mdi:account-group"></iconify-icon></div>
         <div>
             <div class="stat-value blue">{{ $stats['customers']['total'] }}</div>
             <div class="stat-label">Customers ({{ $stats['customers']['active'] }} Aktif)</div>
@@ -12,7 +12,7 @@
 
     {{-- Card Service --}}
     <div class="stat-card cyan">
-        <div class="stat-icon cyan">⚙️</div>
+        <div class="stat-icon cyan"><iconify-icon icon="mdi:cog"></iconify-icon></div>
         <div>
             <div class="stat-value cyan">{{ $stats['services']['total'] }}</div>
             <div class="stat-label">Services ({{ $stats['services']['active'] }} Aktif)</div>
@@ -21,7 +21,7 @@
 
     {{-- Card Subscription --}}
     <div class="stat-card indigo">
-        <div class="stat-icon indigo">📋</div>
+        <div class="stat-icon indigo"><iconify-icon icon="mdi:clipboard-text"></iconify-icon></div>
         <div>
             <div class="stat-value indigo">{{ $stats['subscriptions']['total'] }}</div>
             <div class="stat-label">Subscriptions ({{ $stats['subscriptions']['active'] }} Aktif)</div>
@@ -30,7 +30,7 @@
 
     {{-- Card Revenue --}}
     <div class="stat-card green">
-    <div class="stat-icon green">💰</div>
+    <div class="stat-icon green"><iconify-icon icon="mdi:cash-multiple"></iconify-icon></div>
     <div>
         <div class="stat-value green" style="font-size: 18px;">
             Rp {{ number_format($stats['subscriptions']['revenue'], 0, ',', '.') }}
@@ -52,7 +52,7 @@
         <div class="card-body">
             @if($latestSubscriptions->isEmpty())
                 <div class="empty-state">
-                    <div class="empty-state-icon">📋</div>
+                    <div class="empty-state-icon"><iconify-icon icon="mdi:clipboard-text"></iconify-icon></div>
                     <h3>Belum ada data</h3>
                     <p>Tidak ada data subscription yang terdaftar.</p>
                 </div>
@@ -79,7 +79,20 @@
                                         <div class="price-value">Rp {{ number_format($sub->service->price, 0, ',', '.') }}</div>
                                     </td>
                                     <td>
-                                        <span class="badge badge-{{ $sub->status }}">{{ $sub->status }}</span>
+                                        <span class="badge badge-{{ $sub->status }}" style="display: inline-flex; align-items: center; gap: 6px;">
+                                            @if($sub->status === 'active')
+                                                <iconify-icon icon="mdi:check-circle" style="font-size: 13px;"></iconify-icon>
+                                            @elseif($sub->status === 'inactive')
+                                                <iconify-icon icon="mdi:close-circle" style="font-size: 13px;"></iconify-icon>
+                                            @elseif($sub->status === 'trial')
+                                                <iconify-icon icon="mdi:clock-outline" style="font-size: 13px;"></iconify-icon>
+                                            @elseif($sub->status === 'isolir')
+                                                <iconify-icon icon="mdi:wifi-off" style="font-size: 13px;"></iconify-icon>
+                                            @elseif($sub->status === 'dismantle')
+                                                <iconify-icon icon="mdi:lock" style="font-size: 13px;"></iconify-icon>
+                                            @endif
+                                            {{ strtoupper($sub->status) }}
+                                        </span>
                                     </td>
                                     <td>
                                         <span class="id-value">{{ $sub->start_date ? $sub->start_date->format('d M Y') : '-' }}</span>
@@ -102,7 +115,7 @@
         <div class="card-body" style="padding: 16px;">
             @if($latestCustomers->isEmpty())
                 <div class="empty-state" style="padding: 20px;">
-                    <div class="empty-state-icon" style="font-size: 32px;">👥</div>
+                    <div class="empty-state-icon" style="font-size: 32px;"><iconify-icon icon="mdi:account-group"></iconify-icon></div>
                     <h3>Belum ada data</h3>
                 </div>
             @else

@@ -13,8 +13,12 @@
 @endphp
 
 <div class="delete-card" style="margin: 0 auto;">
-    <div class="delete-icon-wrap" style="background: {{ $subCount > 0 ? 'var(--light-primary)' : 'var(--light-red)' }}; color: {{ $subCount > 0 ? 'var(--primary)' : 'var(--red)' }};">
-        {{ $subCount > 0 ? '🛡️' : '🗑️' }}
+    <div class="delete-icon-wrap" style="background: {{ $subCount > 0 ? 'var(--light-primary)' : 'var(--light-red)' }}; color: {{ $subCount > 0 ? 'var(--primary)' : 'var(--red)' }}; display: flex; align-items: center; justify-content: center;">
+        @if($subCount > 0)
+            <iconify-icon icon="mdi:shield-check" style="font-size: 32px;"></iconify-icon>
+        @else
+            <iconify-icon icon="mdi:trash-can" style="font-size: 32px;"></iconify-icon>
+        @endif
     </div>
 
     @if($subCount > 0)

@@ -9,8 +9,12 @@
 </div>
 
 <div class="delete-card" style="margin: 0 auto;">
-    <div class="delete-icon-wrap" style="background: {{ $subscriptionCount > 0 ? 'var(--light-primary)' : 'var(--light-red)' }}; color: {{ $subscriptionCount > 0 ? 'var(--primary)' : 'var(--red)' }};">
-        {{ $subscriptionCount > 0 ? '🛡️' : '🗑️' }}
+    <div class="delete-icon-wrap" style="background: {{ $subscriptionCount > 0 ? 'var(--light-primary)' : 'var(--light-red)' }}; color: {{ $subscriptionCount > 0 ? 'var(--primary)' : 'var(--red)' }}; display: flex; align-items: center; justify-content: center;">
+        @if($subscriptionCount > 0)
+            <iconify-icon icon="mdi:shield-check" style="font-size: 32px;"></iconify-icon>
+        @else
+            <iconify-icon icon="mdi:trash-can" style="font-size: 32px;"></iconify-icon>
+        @endif
     </div>
 
     @if($subscriptionCount > 0)

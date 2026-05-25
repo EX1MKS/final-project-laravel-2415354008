@@ -2,7 +2,9 @@
 
     {{-- Logo --}}
     <div class="sidebar-logo">
-        <div class="sidebar-logo-icon">⚡</div>
+        <div class="sidebar-logo-icon">
+            <iconify-icon icon="mdi:lightning-bolt" style="font-size: 22px; color: var(--primary);"></iconify-icon>
+        </div>
         <div class="sidebar-logo-text">
             <h2>ERP System</h2>
             <span>Digital Services</span>
@@ -16,7 +18,9 @@
 
         <a href="{{ route('dashboard') }}"
            class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-            <span class="nav-icon">🏠</span>
+            <span class="nav-icon">
+                <iconify-icon icon="mdi:home" style="font-size: 18px;"></iconify-icon>
+            </span>
             Dashboard
         </a>
 
@@ -24,19 +28,25 @@
 
         <a href="{{ route('services.index') }}"
            class="nav-item {{ request()->routeIs('services.*') ? 'active' : '' }}">
-            <span class="nav-icon">⚙️</span>
+            <span class="nav-icon">
+                <iconify-icon icon="mdi:cog" style="font-size: 18px;"></iconify-icon>
+            </span>
             Services
         </a>
 
         <a href="{{ route('customers.index') }}"
            class="nav-item {{ request()->routeIs('customers.*') ? 'active' : '' }}">
-            <span class="nav-icon">👥</span>
+            <span class="nav-icon">
+                <iconify-icon icon="mdi:account-group" style="font-size: 18px;"></iconify-icon>
+            </span>
             Customers
         </a>
 
         <a href="{{ route('subscriptions.index') }}"
            class="nav-item {{ request()->routeIs('subscriptions.*') ? 'active' : '' }}">
-            <span class="nav-icon">📋</span>
+            <span class="nav-icon">
+                <iconify-icon icon="mdi:clipboard-text" style="font-size: 18px;"></iconify-icon>
+            </span>
             Subscriptions
         </a>
 
@@ -61,7 +71,7 @@
            background:var(--primary-dark); border:none; color:white;
            width:40px; height:40px; border-radius:10px; cursor:pointer;
            font-size:18px; align-items:center; justify-content:center;">
-    ☰
+    <iconify-icon icon="mdi:menu" style="font-size: 20px;"></iconify-icon>
 </button>
 
 <style>

@@ -10,7 +10,7 @@
 
 <div class="form-card" style="margin: 0 auto;">
     <div class="form-card-header">
-        <div class="form-card-header-icon">⚙️</div>
+        <div class="form-card-header-icon"><iconify-icon icon="mdi:cog"></iconify-icon></div>
         <div>
             <h2>Edit Layanan Digital</h2>
             <p>Perbarui detail paket dan spesifikasi layanan</p>

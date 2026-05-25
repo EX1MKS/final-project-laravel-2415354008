@@ -10,7 +10,7 @@
 
 <div class="form-card" style="margin: 0 auto;">
     <div class="form-card-header">
-        <div class="form-card-header-icon">📋</div>
+        <div class="form-card-header-icon"><iconify-icon icon="mdi:clipboard-text"></iconify-icon></div>
         <div>
             <h2>Registrasi Langganan Baru</h2>
             <p>Daftarkan paket layanan digital ke akun pelanggan</p>

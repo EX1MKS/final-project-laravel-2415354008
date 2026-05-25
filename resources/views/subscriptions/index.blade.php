@@ -1,16 +1,27 @@
 @component('layout.app', ['title' => $title, 'subtitle' => $subtitle])
 
+{{-- Flash Alerts --}}
+@if(session('success'))
+    <div style="background:#f0fff4;border:1px solid #c6f6d5;border-left:4px solid #38a169;color:#276749;padding:12px 16px;border-radius:8px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:14px;">
+        <span><iconify-icon icon="mdi:check-circle" style="font-size:16px; vertical-align:-3px;"></iconify-icon></span> {{ session('success') }}
+    </div>
+@endif
+@if(session('error'))
+    <div style="background:#fff1f1;border:1px solid #ffcccc;border-left:4px solid #dc2626;color:#991b1b;padding:12px 16px;border-radius:8px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:14px;">
+        <span><iconify-icon icon="mdi:cancel" style="font-size:16px; vertical-align:-3px;"></iconify-icon></span> {{ session('error') }}
+    </div>
+@endif
 {{-- Top Row: Total Subscriptions & MRR --}}
 <div class="stats-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 20px;">
     <div class="stat-card indigo">
-        <div class="stat-icon indigo">📋</div>
+        <div class="stat-icon indigo"><iconify-icon icon="mdi:clipboard-text"></iconify-icon></div>
         <div>
             <div class="stat-value indigo">{{ $stats['total'] }}</div>
             <div class="stat-label">Total Langganan Terdaftar</div>
         </div>
     </div>
     <div class="stat-card green">
-        <div class="stat-icon green">💰</div>
+        <div class="stat-icon green"><iconify-icon icon="mdi:cash-multiple"></iconify-icon></div>
         <div>
             <div class="stat-value green">Rp {{ number_format($stats['revenue'], 0, ',', '.') }}</div>
             <div class="stat-label">Monthly Recurring Revenue (MRR) - Aktif</div>
@@ -44,17 +55,17 @@
     <div class="toolbar-left">
         @if($status)
             <a href="{{ route('subscriptions.index', ['search' => $search]) }}" class="btn btn-secondary btn-sm">
-                ✕ Filter Status: {{ strtoupper($status) }}
+                <iconify-icon icon="mdi:close" style="font-size:14px; vertical-align:-2px;"></iconify-icon> Filter Status: {{ strtoupper($status) }}
             </a>
         @endif
         @if(request('customer_id'))
             <a href="{{ route('subscriptions.index', ['status' => $status, 'search' => $search, 'service_id' => request('service_id')]) }}" class="btn btn-secondary btn-sm">
-                ✕ Filter Pelanggan
+                <iconify-icon icon="mdi:close" style="font-size:14px; vertical-align:-2px;"></iconify-icon> Filter Pelanggan
             </a>
         @endif
         @if(request('service_id'))
             <a href="{{ route('subscriptions.index', ['status' => $status, 'search' => $search, 'customer_id' => request('customer_id')]) }}" class="btn btn-secondary btn-sm">
-                ✕ Filter Layanan
+                <iconify-icon icon="mdi:close" style="font-size:14px; vertical-align:-2px;"></iconify-icon> Filter Layanan
             </a>
         @endif
     </div>
@@ -86,7 +97,7 @@
             </select>
 
             <div class="search-input-wrap">
-                <span class="search-icon">🔍</span>
+                <span class="search-icon"><iconify-icon icon="mdi:magnify" style="font-size:16px;"></iconify-icon></span>
                 <input type="text" name="search" class="search-input" placeholder="Cari pelanggan/layanan..." value="{{ $search }}" style="width: 180px;">
             </div>
 
@@ -97,7 +108,7 @@
         </form>
 
         <a href="{{ route('subscriptions.create') }}" class="btn btn-primary">
-            <span>➕</span> Tambah Subscription
+            <span><iconify-icon icon="mdi:plus" style="font-size:16px; vertical-align:-3px;"></iconify-icon></span> Tambah Subscription
         </a>
     </div>
 </div>
@@ -110,7 +121,7 @@
     <div class="card-body">
         @if($subscriptions->isEmpty())
             <div class="empty-state">
-                <div class="empty-state-icon">📋</div>
+                <div class="empty-state-icon"><iconify-icon icon="mdi:clipboard-text"></iconify-icon></div>
                 <h3>Subscription tidak ditemukan</h3>
                 <p>Tidak ada data subscription yang cocok dengan kriteria filter Anda.</p>
                 <a href="{{ route('subscriptions.create') }}" class="btn btn-primary btn-sm">Daftarkan Subscription Baru</a>
@@ -126,7 +137,6 @@
                             <th>Tanggal Mulai</th>
                             <th>Tanggal Berakhir</th>
                             <th>Status</th>
-                            <th style="text-align: right; padding-right: 24px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -149,18 +159,49 @@
                                     <span class="id-value">{{ $sub->end_date ? $sub->end_date->format('d M Y') : 'Selamanya (Unlimited)' }}</span>
                                 </td>
                                 <td>
-                                    <span class="badge badge-{{ $sub->status }}">
-                                        {{ $sub->status }}
-                                    </span>
-                                </td>
-                                <td style="text-align: right; padding-right: 24px;">
-                                    <div class="action-group" style="justify-content: flex-end;">
-                                        <a href="{{ route('subscriptions.edit', $sub) }}" class="btn btn-secondary btn-sm">
-                                            Edit
-                                        </a>
-                                        <a href="{{ route('subscriptions.delete', $sub) }}" class="btn btn-danger btn-sm btn-icon" title="Hapus">
-                                            🗑️
-                                        </a>
+                                    <div style="display: inline-flex; align-items: center; gap: 8px;">
+                                        @if($sub->status === 'active')
+                                            <iconify-icon icon="mdi:check-circle" style="color: var(--green); font-size: 18px;"></iconify-icon>
+                                        @elseif($sub->status === 'inactive')
+                                            <iconify-icon icon="mdi:close-circle" style="color: var(--red); font-size: 18px;"></iconify-icon>
+                                        @elseif($sub->status === 'trial')
+                                            <iconify-icon icon="mdi:clock-outline" style="color: var(--blue); font-size: 18px;"></iconify-icon>
+                                        @elseif($sub->status === 'isolir')
+                                            <iconify-icon icon="mdi:wifi-off" style="color: var(--red); font-size: 18px;"></iconify-icon>
+                                        @elseif($sub->status === 'dismantle')
+                                            <iconify-icon icon="mdi:lock" style="color: var(--gray); font-size: 18px;"></iconify-icon>
+                                        @endif
+
+                                        @if($sub->status === 'dismantle')
+                                            {{-- Locked: tampilkan badge saja --}}
+                                            <span class="badge badge-dismantle">
+                                                DISMANTLE
+                                            </span>
+                                        @else
+                                            {{-- Inline status dropdown --}}
+                                            <form action="{{ route('subscriptions.updateStatus', $sub) }}" method="POST" style="margin:0;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <select name="status"
+                                                        onchange="this.form.submit()"
+                                                        style="
+                                                            padding: 5px 10px;
+                                                            border-radius: 6px;
+                                                            border: 1px solid var(--border, #e2e8f0);
+                                                            font-size: 12px;
+                                                            font-weight: 600;
+                                                            cursor: pointer;
+                                                            background: var(--white, #fff);
+                                                            color: var(--black, #1a202c);
+                                                        ">
+                                                    @foreach($statuses as $st)
+                                                        <option value="{{ $st }}" {{ $sub->status === $st ? 'selected' : '' }}>
+                                                            {{ strtoupper($st) }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

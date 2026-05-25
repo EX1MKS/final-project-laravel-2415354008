@@ -78,8 +78,5 @@ Route::prefix('subscriptions')->name('subscriptions.')->group(function () {
     Route::get('/',                  [SubscriptionController::class, 'index'])->name('index');
     Route::get('/create',            [SubscriptionController::class, 'create'])->name('create');
     Route::post('/',                 [SubscriptionController::class, 'store'])->name('store');
-    Route::get('/{subscription}/edit',   [SubscriptionController::class, 'edit'])->name('edit');
-    Route::put('/{subscription}',        [SubscriptionController::class, 'update'])->name('update');
-    Route::get('/{subscription}/delete', [SubscriptionController::class, 'delete'])->name('delete');
-    Route::delete('/{subscription}',     [SubscriptionController::class, 'destroy'])->name('destroy');
+    Route::patch('/{subscription}/status', [SubscriptionController::class, 'updateStatus'])->name('updateStatus');
 });

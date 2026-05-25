@@ -10,7 +10,7 @@
 
 <div class="form-card" style="margin: 0 auto;">
     <div class="form-card-header">
-        <div class="form-card-header-icon">👥</div>
+        <div class="form-card-header-icon"><iconify-icon icon="mdi:account-group"></iconify-icon></div>
         <div>
             <h2>Edit Data Pelanggan</h2>
             <p>Perbarui profil dan informasi detail pelanggan</p>
